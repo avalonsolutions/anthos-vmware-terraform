@@ -2,6 +2,10 @@ data "vsphere_datastore" "datastore1" {
   name          = "datastore1"
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
+data "vsphere_datastore" "datastore2" {
+  name          = "datastore2"
+  datacenter_id = data.vsphere_datacenter.datacenter.id
+}
 
 data "vsphere_resource_pool" "pool" {
   name          = "StockholmSmall/Resources"

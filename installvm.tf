@@ -22,24 +22,24 @@ resource "vsphere_virtual_machine" "ivm_vm" {
   }
 
   provisioner "file" {
-    source      = "/Users/engfors/github/devoteam/sthlm/anthos-vmware-terraform/installvm.sh"
-    destination = "/tmp/script.sh"
+    source      = "${var.script_path}/installvm.sh"
+    destination = "/tmp/installscript.sh"
   }
 
   provisioner "file" {
-    source      = "/Users/engfors/Anthos_sthlm/sa/whitelisted-key.json"
+    source      = "${var.sa_path}/whitelisted-key.json"
     destination = "/home/${var.linux_user}/whitelisted-key.json"
   }
 
   provisioner "file" {
-    source      = "/Users/engfors/Anthos_sthlm/sa/gcp_account.json"
+    source      = "${var.sa_path}/gcp_account.json"
     destination = "/home/${var.linux_user}/gcp_account.json"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/script.sh",
-      "cd /tmp && echo ${var.user_password} | sudo -S ./script.sh ${var.google_project} ${var.vsphere_user} ${var.vsphere_password} ${var.vsphere_server} ${var.linux_user}",
+      "chmod +x /tmp/installscript.sh",
+      "cd /tmp && echo ${var.user_password} | sudo -S ./installscript.sh ${var.google_project} ${var.vsphere_user} ${var.vsphere_password} ${var.vsphere_server} ${var.linux_user}",
     ]
   }
 
@@ -48,5 +48,32 @@ resource "vsphere_virtual_machine" "ivm_vm" {
     user     = var.linux_user
     password = var.user_password
     host     = self.guest_ip_addresses[0]
+  }
+}
+
+output "ivm_ip" {
+  description = "IP to InstallVM"
+  value = "${vsphere_virtual_machine.ivm_vm.guest_ip_addresses[0]}"
+}
+
+resource "null_resource" "deploy_admin-cluster" {
+
+  connection {
+    type     = "ssh"
+    user     = var.linux_user
+    password = var.user_password
+    host     = vsphere_virtual_machine.ivm_vm.guest_ip_addresses[0]
+  }
+  
+  provisioner "file" {
+    source      = "${var.script_path}/adminvm.sh"
+    destination = "/tmp/adminvm.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/adminvm.sh",
+      "cd /tmp && echo ${var.user_password} | sudo -S ./adminvm.sh"
+    ]
   }
 }

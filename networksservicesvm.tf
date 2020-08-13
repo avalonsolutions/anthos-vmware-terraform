@@ -30,7 +30,7 @@ resource "vsphere_virtual_machine" "nws_vm" {
   }
 
   provisioner "file" {
-    source      = "/Users/engfors/github/devoteam/sthlm/networkservices.sh"
+    source      = "${var.script_path}/networkservices.sh"
     destination = "/tmp/script.sh"
   }
 
@@ -48,4 +48,9 @@ resource "vsphere_virtual_machine" "nws_vm" {
     password = var.user_password
     host     = self.guest_ip_addresses[0]
   }
+}
+
+output "nws_ip" {
+  description = "IP to NetworkServices VM"
+  value = "${vsphere_virtual_machine.nws_vm.guest_ip_addresses[0]}"
 }

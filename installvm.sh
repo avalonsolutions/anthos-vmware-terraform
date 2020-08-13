@@ -18,7 +18,6 @@ LINUX_USER=$5
 
 # Other variables
 PWD=/home/$LINUX_USER
-echo $PWD
 
 # Check for and apply updates
 apt update && apt upgrade -y
@@ -77,6 +76,7 @@ sed -i "s~  cluster: \"\"~  cluster: \"Stockholm\"~" $file
 sed -i "s~  network: \"\"~  network: \"VM Network\"~" $file
 sed -i "s~  resourcePool: \"\"~  resourcePool: \"StockholmSmall/Resources\"~" $file
 sed -i "s~  caCertPath: \"\"~  caCertPath: \"$PWD/vcenter-ca-cert.pem\"~" $file
+sed -i "s~  dataDiskMB: 512~  dataDiskMB: 1024~" $file
 sed -i "s~    ipAllocationMode: \"\"~    ipAllocationMode: \"dhcp\"~" $file
 
 # If your vCenter server uses a certificate issued by the default VMware CA, download the certificate as follows
@@ -94,21 +94,6 @@ cp -r * $PWD/
 ./gkeadm create admin-workstation
 
 # Post-Install finished
-echo "Post-Install successful, system rebooting"
-echo "Once rebooted, connect via:"
-
-# Get interface names and ip to first interface
-interface_array=()
-for iface in $(ip link | awk -F: '$0 !~ "lo|vir|wl|^[^0-9]"{print $2}' | awk NF)
-do
-        interface_array+=("$iface")
-done
-export FIRST_INT=${interface_array[0]}
-export IP=$(/sbin/ip -o -4 addr list $FIRST_INT | awk '{print $4}' | cut -d/ -f1)
-echo $IP
-
-# Restart VM
-reboot 
-
+echo "Post-Install successful, Admin Workstation deployed"
 
 # End of script

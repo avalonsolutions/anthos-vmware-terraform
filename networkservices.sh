@@ -80,8 +80,6 @@ apt-get -y install iptables-persistent
 
 # Post-Install finished
 echo "Post-Install successful, system rebooting"
-echo "Once rebooted, connect via:"
-echo $IP
 
 # Restart VM
 reboot 

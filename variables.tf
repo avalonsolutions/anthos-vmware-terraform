@@ -3,7 +3,7 @@ variable "vsphere_user" {
 }
 
 variable "linux_user" {
-  default = "delta"
+  description = "use environent variable for password (export TF_VAR_linux_user=)"
 }
 
 variable "vsphere_password" {
@@ -36,4 +36,12 @@ variable "user_password" {
 
 variable "google_project" {
   default = "anthos-sandbox-256114"
+}
+
+variable "sa_path" {
+  description = "use environent variable for password (export TF_VAR_sa_path=)"
+}
+
+variable "script_path" {
+  description = "use environent variable for password (export TF_VAR_script_path=)"
 }
