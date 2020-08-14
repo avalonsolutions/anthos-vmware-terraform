@@ -71,12 +71,17 @@ iptables -A FORWARD -i $FIRST_INT -o $FIRST_INT -j REJECT
 
 # Enable routing.
 echo 1 > /proc/sys/net/ipv4/ip_forward
+# Make it persistent
+sed -i "s~#net.ipv4.ip_forward=1~net.ipv4.ip_forward=1~" /etc/sysctl.conf
 
 # Prepare for iptables-persistent install skipping manual inputs needed
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
 echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
 
 apt-get -y install iptables-persistent
+
+iptables-save >/etc/iptables/rules.v4
+ip6tables-save >/etc/iptables/rules.v6
 
 # Post-Install finished
 echo "Post-Install successful, system rebooting"

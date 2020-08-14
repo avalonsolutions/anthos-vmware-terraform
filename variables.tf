@@ -3,7 +3,7 @@ variable "vsphere_user" {
 }
 
 variable "linux_user" {
-  description = "use environent variable for password (export TF_VAR_linux_user=)"
+  description = "use environent variable for user (export TF_VAR_linux_user=)"
 }
 
 variable "vsphere_password" {

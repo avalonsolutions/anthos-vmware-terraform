@@ -66,14 +66,39 @@ resource "null_resource" "deploy_admin-cluster" {
   }
   
   provisioner "file" {
-    source      = "${var.script_path}/adminvm.sh"
-    destination = "/tmp/adminvm.sh"
+    source      = "${var.script_path}/adminws.sh"
+    destination = "/tmp/adminws.sh"
+  }
+  
+  provisioner "file" {
+    source      = "${var.script_path}/admin-cluster.sh"
+    destination = "/tmp/admin-cluster.sh"
+  }
+
+  provisioner "file" {
+    source      = "${var.script_path}/user-cluster.sh"
+    destination = "/tmp/user-cluster.sh"
+  }
+
+  provisioner "file" {
+    source      = "${var.sa_path}/stackdriver-key.json"
+    destination = "/home/${var.linux_user}/stackdriver-key.json"
+  }
+
+  provisioner "file" {
+    source      = "${var.sa_path}/register-key.json"
+    destination = "/home/${var.linux_user}/register-key.json"
+  }
+
+  provisioner "file" {
+    source      = "${var.sa_path}/connect-key.json"
+    destination = "/home/${var.linux_user}/connect-key.json"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/adminvm.sh",
-      "cd /tmp && echo ${var.user_password} | sudo -S ./adminvm.sh"
+      "chmod +x /tmp/adminws.sh",
+      "cd /tmp && echo ${var.user_password} | sudo -S ./adminws.sh ${var.user_password}"
     ]
   }
 }

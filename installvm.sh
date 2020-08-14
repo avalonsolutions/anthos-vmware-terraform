@@ -96,4 +96,7 @@ cp -r * $PWD/
 # Post-Install finished
 echo "Post-Install successful, Admin Workstation deployed"
 
+# Logout
+exit
+
 # End of script
