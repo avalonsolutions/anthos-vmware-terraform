@@ -26,18 +26,23 @@ ssh-keyscan -H $IP >> ~/.ssh/known_hosts
 # Connect to Admin WS
 $connect <<'EOT'
 
+# Variables
+USER_PASSWORD=
+NetworkServices=192.168.86.33
+InstallVM=192.168.86.20
+
 # Install sshpass
 sudo apt install sshpass -y
 
 # Add InstallVM to known hosts
-ssh-keyscan -H 192.168.86.20 >> ~/.ssh/known_hosts
+ssh-keyscan -H $InstallVM >> ~/.ssh/known_hosts
 
 # Add routes on Admin WS  to reach networks behind NetworkServicesVM
-sudo ip route add 172.16.116.0/24 via 192.168.86.20
-sudo ip route add 192.168.116.0/24 via 192.168.86.20
+sudo ip route add 172.16.116.0/24 via $NetworkServices
+sudo ip route add 192.168.116.0/24 via $NetworkServices
 
 # Copy required service accounts from InstallVM
-sshpass -p $USER_PASSWORD scp delta@192.168.86.20:/home/delta/stackdriver-key.json .
+sshpass -p $USER_PASSWORD scp delta@$InstallVM:/home/delta/stackdriver-key.json .
 
 
 # Create and modify required files for admin-cluster
@@ -96,9 +101,9 @@ sed -i "s~  serviceAccountKeyPath: \"\"~  serviceAccountKeyPath: \"/home/ubuntu/
 
 
 # Copy required service accounts from InstallVM
-sshpass -p $USER_PASSWORD scp delta@192.168.86.20:/home/delta/connect-key.json .
-sshpass -p $USER_PASSWORD scp delta@192.168.86.20:/home/delta/stackdriver-key.json .
-sshpass -p $USER_PASSWORD scp delta@192.168.86.20:/home/delta/register-key.json .
+sshpass -p $USER_PASSWORD scp delta@$InstallVM:/home/delta/connect-key.json .
+sshpass -p $USER_PASSWORD scp delta@$InstallVM:/home/delta/stackdriver-key.json .
+sshpass -p $USER_PASSWORD scp delta@$InstallVM:/home/delta/register-key.json .
 
 
 # Create and modify required files for user-cluster
@@ -155,6 +160,19 @@ sed -i "s~  serviceAccountKeyPath: \"\"~  serviceAccountKeyPath: \"/home/ubuntu/
 sed -i "s~  registerServiceAccountKeyPath: \"\"~  registerServiceAccountKeyPath: \"/home/ubuntu/register-key.json\"~" user-cluster.yaml
 sed -i "s~  agentServiceAccountKeyPath: \"\"~  agentServiceAccountKeyPath: \"/home/ubuntu/connect-key.json\"~" user-cluster.yaml
 
+# Create admin-cluster
+# Run gkectl prepare to initialize your vSphere environment
+gkectl prepare --config admin-cluster.yaml
+# Create and configure the VM for your Seesaw load balancer
+gkectl create loadbalancer --config admin-cluster.yaml
+# Create your admin cluster
+gkectl create admin --config admin-cluster.yaml
+
+# Create user-cluster
+# Create and configure the VM for your Seesaw load balancer
+gkectl create loadbalancer --kubeconfig kubeconfig --config user-cluster.yaml
+# Create your user cluster
+gkectl create cluster --kubeconfig kubeconfig --config user-cluster.yaml
 
 # Logout
 exit
