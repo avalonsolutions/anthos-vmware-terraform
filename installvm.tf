@@ -53,7 +53,7 @@ resource "vsphere_virtual_machine" "ivm_vm" {
 
 output "ivm_ip" {
   description = "IP to InstallVM"
-  value = "${vsphere_virtual_machine.ivm_vm.guest_ip_addresses[0]}"
+  value       = "${vsphere_virtual_machine.ivm_vm.guest_ip_addresses[0]}"
 }
 
 resource "null_resource" "deploy_admin-cluster" {
@@ -64,12 +64,12 @@ resource "null_resource" "deploy_admin-cluster" {
     password = var.user_password
     host     = vsphere_virtual_machine.ivm_vm.guest_ip_addresses[0]
   }
-  
+
   provisioner "file" {
     source      = "${var.script_path}/adminws.sh"
     destination = "/tmp/adminws.sh"
   }
-  
+
   provisioner "file" {
     source      = "${var.script_path}/admin-cluster.sh"
     destination = "/tmp/admin-cluster.sh"

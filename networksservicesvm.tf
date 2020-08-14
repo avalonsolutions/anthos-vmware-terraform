@@ -52,5 +52,5 @@ resource "vsphere_virtual_machine" "nws_vm" {
 
 output "nws_ip" {
   description = "IP to NetworkServices VM"
-  value = "${vsphere_virtual_machine.nws_vm.guest_ip_addresses[0]}"
+  value       = "${vsphere_virtual_machine.nws_vm.guest_ip_addresses[0]}"
 }
