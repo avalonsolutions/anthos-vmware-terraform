@@ -93,10 +93,15 @@ cp -r * $PWD/
 # Create your admin workstation
 ./gkeadm create admin-workstation
 
+# Copy ssh key to user path and give read permissions
+mkdir $PWD/.ssh
+cp /root/.ssh/gke-admin-workstation $PWD/.ssh/
+chmod +r $PWD/.ssh/gke-admin-workstation
+
 # Post-Install finished
 echo "Post-Install successful, Admin Workstation deployed"
 
-# Logout
-exit
+# Restart VM
+reboot
 
 # End of script

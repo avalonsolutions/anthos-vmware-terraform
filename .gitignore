@@ -30,3 +30,7 @@ override.tf.json
 
 # JSON key files
 *.json
+
+# SSH keys
+**.ssh/*
+adminws/gke-admin-workstation

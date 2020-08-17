@@ -49,8 +49,3 @@ resource "vsphere_virtual_machine" "nws_vm" {
     host     = self.guest_ip_addresses[0]
   }
 }
-
-output "nws_ip" {
-  description = "IP to NetworkServices VM"
-  value       = "${vsphere_virtual_machine.nws_vm.guest_ip_addresses[0]}"
-}

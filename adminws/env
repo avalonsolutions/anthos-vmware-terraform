@@ -1,0 +1,6 @@
+export TF_VAR_aws_host_name=$(terraform state show vsphere_virtual_machine.aws_vm | grep "hostname" | cut -c 29-)
+TF_VAR_aws_host_name=${TF_VAR_aws_host_name:1:-1}
+export TF_VAR_aws_public_keys=$(terraform state show vsphere_virtual_machine.aws_vm | grep "public-keys" | cut -c 29-)
+TF_VAR_aws_public_keys=${TF_VAR_aws_public_keys:1:-1}
+export TF_VAR_aws_user_data=$(terraform state show vsphere_virtual_machine.aws_vm | grep "user-data" | cut -c 29-)
+TF_VAR_aws_user_data=${TF_VAR_aws_user_data:1:-1}
