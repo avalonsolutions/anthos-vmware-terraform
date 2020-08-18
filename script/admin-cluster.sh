@@ -49,12 +49,12 @@ blocks:
 sed -i "s~  dataDisk: \"\"~  dataDisk: \"admin-disk2.vmdk\"~" admin-cluster.yaml
 sed -i "s~    type: dhcp~    type: static~" admin-cluster.yaml
 sed -i "s~    # ipBlockFilePath: \"\"~    ipBlockFilePath: \"/home/ubuntu/admin-hostconfig.yaml\"~" admin-cluster.yaml
-sed -i "s~  serviceCIDR: 10.96.232.0/24~  serviceCIDR: 10.196.116.0/24~" admin-cluster.yaml
-sed -i "s~  podCIDR: 192.168.0.0/16~  podCIDR: 10.116.0.0/16~" admin-cluster.yaml
+sed -i "s~  serviceCIDR:.*~  serviceCIDR: 10.196.116.0/24~" admin-cluster.yaml
+sed -i "s~  podCIDR:.*~  podCIDR: 10.116.0.0/16~" admin-cluster.yaml
 sed -i "s~    networkName: VM Network~    networkName: \"Admin Network\"~" admin-cluster.yaml
 sed -i "s~    controlPlaneVIP: \"\"~    controlPlaneVIP: \"172.16.116.4\"~" admin-cluster.yaml
 sed -i "s~    ipBlockFilePath: \"\"~    ipBlockFilePath: \"admin-seesaw-hostconfig.yaml\"~" admin-cluster.yaml
-sed -i "s~    vrid: 0~    vrid: 172~" admin-cluster.yaml
+sed -i "s~    vrid:.*~    vrid: 172~" admin-cluster.yaml
 sed -i "s~    masterIP: \"\"~    masterIP: \"172.16.116.7\"~" admin-cluster.yaml
 sed -i "s~  projectID: \"\"~  projectID: \"anthos-sandbox-256114\"~" admin-cluster.yaml
 sed -i "s~  clusterLocation: \"\"~  clusterLocation: \"europe-north1\"~" admin-cluster.yaml

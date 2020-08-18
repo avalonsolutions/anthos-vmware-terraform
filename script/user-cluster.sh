@@ -42,16 +42,20 @@ blocks:
       hostname: "seesaw-vm"
 " > user-seesaw-hostconfig.yaml
 
-sed -i "s~name: \"\"~name: \"stockholm-gke-cluster\"~" user-cluster.yaml
+sed -i "s~\<name: \"\"~name: \"boden-gke-cluster\"~" user-cluster.yaml
 sed -i "s~    type: dhcp~    type: static~" user-cluster.yaml
 sed -i "s~    # ipBlockFilePath: \"\"~    ipBlockFilePath: \"/home/ubuntu/user-hostconfig.yaml\"~" user-cluster.yaml
+sed -i "s~  serviceCIDR:.*~  serviceCIDR: 10.196.216.0/24~" user-cluster.yaml
+sed -i "s~  podCIDR:.*~  podCIDR: 10.216.0.0/16~" user-cluster.yaml
 sed -i "s~    networkName: VM Network~    networkName: \"User Network\"~" user-cluster.yaml
 sed -i "s~    controlPlaneVIP: \"\"~    controlPlaneVIP: \"172.16.116.112\"~" user-cluster.yaml
 sed -i "s~    ingressVIP: \"\"~    ingressVIP: \"192.168.116.3\"~" user-cluster.yaml
 sed -i "s~    ipBlockFilePath: \"\"~    ipBlockFilePath: \"user-seesaw-hostconfig.yaml\"~" user-cluster.yaml
-sed -i "s~    vrid: 0~    vrid: 192~" user-cluster.yaml
+sed -i "s~    vrid:.*~    vrid: 192~" user-cluster.yaml
 sed -i "s~    masterIP: \"\"~    masterIP: \"192.168.116.7\"~" user-cluster.yaml
-sed -i "s~- name: pool-1~- name: sthlm-pool-1~" user-cluster.yaml
+sed -i "s~- name:.*~- name: sthlm-pool-1~" user-cluster.yaml
+# Set antiAffinityGroups to false to disable DRS rule creation if less than 3 vsphere hosts
+sed -i "112s~  enabled: true~  enabled: false~" user-cluster.yaml
 sed -i "s~  projectID: \"\"~  projectID: \"anthos-sandbox-256114\"~" user-cluster.yaml
 sed -i "s~  clusterLocation: \"\"~  clusterLocation: \"europe-north1\"~" user-cluster.yaml
 sed -i "s~  serviceAccountKeyPath: \"\"~  serviceAccountKeyPath: \"/home/ubuntu/stackdriver-key.json\"~" user-cluster.yaml
