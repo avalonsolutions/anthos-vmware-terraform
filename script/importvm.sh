@@ -1,3 +1,6 @@
+# Get initial variables
+source ~/Anthos_sthlm/env
+
 # RUN ./importvm.sh gke-admin-ws-200814-093901 (Use name of current admin WS)
 
 export TF_VAR_aws_public_keys=""
@@ -8,5 +11,5 @@ echo "VM imported, remember to source env for correct variables!!!"
 
 # Copy ssh key to .ssh/
 mkdir /Users/engfors/github/devoteam/sthlm/anthos-vmware-terraform/adminws/.ssh/
-scp -r delta@192.168.86.246:/home/delta/.ssh/gke-admin-workstation .ssh/
+scp -r delta@192.168.86.20:/home/delta/.ssh/gke-admin-workstation .ssh
 chmod 400 /Users/engfors/github/devoteam/sthlm/anthos-vmware-terraform/adminws/.ssh/gke-admin-workstation

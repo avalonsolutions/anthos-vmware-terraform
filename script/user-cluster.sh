@@ -1,9 +1,6 @@
 #! /bin/bash
 echo "Creating User-Cluster..."
 
-# Variables passed from terraform
-USER_PASSWORD=$1
-
 # Switch folder
 cd /home/ubuntu/
 
@@ -61,6 +58,11 @@ sed -i "s~  serviceAccountKeyPath: \"\"~  serviceAccountKeyPath: \"/home/ubuntu/
 sed -i "s~  registerServiceAccountKeyPath: \"\"~  registerServiceAccountKeyPath: \"/home/ubuntu/register-key.json\"~" user-cluster.yaml
 sed -i "s~  agentServiceAccountKeyPath: \"\"~  agentServiceAccountKeyPath: \"/home/ubuntu/connect-key.json\"~" user-cluster.yaml
 
+# Create and configure the VM for your Seesaw load balancer
+## gkectl create loadbalancer --kubeconfig kubeconfig --config user-cluster.yaml
+
+# Create your user cluster
+## gkectl create cluster --kubeconfig kubeconfig --config user-cluster.yaml
 
 # echo "User-cluster deployed."
 echo "Configuration complete."
