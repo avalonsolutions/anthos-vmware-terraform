@@ -7,7 +7,7 @@ resource "vsphere_virtual_machine" "aws_vm" {
   enable_disk_uuid = true
   enable_logging   = true
   num_cpus         = 4
-  memory           = 16384
+  memory           = 8192
 
   # annotation = "Cluster Installed"
 
