@@ -1,18 +1,18 @@
 resource "vsphere_virtual_machine" "aws_vm" {
   name             = var.aws_host_name
-  resource_pool_id = data.vsphere_resource_pool.pool.id
-  datastore_id     = data.vsphere_datastore.datastore2.id
-  host_system_id   = data.vsphere_host.esxi_host.id
+  resource_pool_id = data.terraform_remote_state.core.outputs.vsphere_resource_pool
+  datastore_id     = data.terraform_remote_state.core.outputs.datastore2
+  host_system_id   = data.terraform_remote_state.core.outputs.esxi_host
 
   enable_disk_uuid = true
   enable_logging   = true
   num_cpus         = 4
-  memory           = 8192
+  memory           = 16384
 
   # annotation = "Cluster Installed"
 
   network_interface {
-    network_id = data.vsphere_network.vm_network.id
+    network_id = data.terraform_remote_state.core.outputs.vm_network
   }
 
   disk {
@@ -83,9 +83,9 @@ resource "null_resource" "deploy_cluster" {
       "chmod +x /tmp/adminws.sh",
       "chmod +x /tmp/admin-cluster.sh",
       "chmod +x /tmp/user-cluster.sh",
-      "cd /tmp && echo ${var.user_password} | sudo -S ./adminws.sh ${data.terraform_remote_state.core.outputs.nws_ip}",
-      "cd /tmp && echo ${var.user_password} | sudo -S ./admin-cluster.sh ${var.user_password}",
-      "cd /tmp && echo ${var.user_password} | sudo -S ./user-cluster.sh ${var.user_password}"
+      "cd /tmp && echo ${var.user_password} | sudo -S ./adminws.sh ${data.terraform_remote_state.core.outputs.nws_ip} ${data.terraform_remote_state.core.outputs.google_project}",
+      "cd /tmp | sudo -S -u ubuntu ./admin-cluster.sh",
+      "cd /tmp | sudo -S -u ubuntu ./user-cluster.sh"
     ]
   }
 }

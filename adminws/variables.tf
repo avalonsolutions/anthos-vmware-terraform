@@ -1,3 +1,10 @@
+variable "vsphere_server" {
+  default = "photon-machine.lan"
+}
+
+variable "vsphere_user" {
+  default = "administrator@vsphere.local"
+}
 variable "vsphere_password" {
   description = "use environent variable for password (export TF_VAR_vpshere_password=)"
 }

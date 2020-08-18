@@ -1,7 +1,7 @@
 provider "vsphere" {
-  user           = data.terraform_remote_state.core.outputs.vsphere_user
+  user           = var.vsphere_user
   password       = var.vsphere_password
-  vsphere_server = data.terraform_remote_state.core.outputs.vsphere_server
+  vsphere_server = var.vsphere_server
 
   # If you have a self-signed cert
   allow_unverified_ssl = true

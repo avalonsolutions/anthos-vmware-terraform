@@ -28,9 +28,29 @@ output "sa_path" {
   value = var.sa_path
 }
 
+output "datastore2" {
+  value = data.vsphere_datastore.datastore2.id
+}
+
+output "vsphere_resource_pool" {
+  value = data.vsphere_resource_pool.pool.id
+}
+
+output "vm_network" {
+  value = data.vsphere_network.vm_network.id
+}
+
+output "esxi_host" {
+  value = data.vsphere_host.esxi_host.id
+}
+
+output "google_project" {
+  value = var.google_project
+}
+
 // Uncomment and create this "dummy" resource when outputs are modified
 /*
-resource "null_resource" "test" {
+resource "null_resource" "echo" {
   provisioner "local-exec" {
     command = "echo \"Terraform outputs updated\""
   }
