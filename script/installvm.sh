@@ -76,7 +76,6 @@ sed -i "s~  cluster: \"\"~  cluster: \"Stockholm\"~" $file
 sed -i "s~  network: \"\"~  network: \"VM Network\"~" $file
 sed -i "s~  resourcePool: \"\"~  resourcePool: \"StockholmSmall/Resources\"~" $file
 sed -i "s~  caCertPath: \"\"~  caCertPath: \"$PWD/vcenter-ca-cert.pem\"~" $file
-sed -i "s~  caCertPath: \"\"~  caCertPath: \"$PWD/vcenter-ca-cert.pem\"~" $file
 sed -i "s~  dataDiskMB: 512~  dataDiskMB: 1024~" $file
 sed -i "s~    ipAllocationMode: \"\"~    ipAllocationMode: \"dhcp\"~" $file
 

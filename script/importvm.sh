@@ -11,5 +11,6 @@ echo "VM imported, remember to source env for correct variables!!!"
 
 # Copy ssh key to .ssh/
 mkdir /Users/engfors/github/devoteam/sthlm/anthos-vmware-terraform/adminws/.ssh/
+sudo rm .ssh/gke-admin-workstation
 scp -r delta@192.168.86.20:/home/delta/.ssh/gke-admin-workstation .ssh
-chmod 400 /Users/engfors/github/devoteam/sthlm/anthos-vmware-terraform/adminws/.ssh/gke-admin-workstation
+sudo chmod 400 /Users/engfors/github/devoteam/sthlm/anthos-vmware-terraform/adminws/.ssh/gke-admin-workstation
