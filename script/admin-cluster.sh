@@ -1,7 +1,5 @@
 #! /bin/bash
 echo "Creating Admin-Cluster..."
-# Variables passed from terraform
-USER_PASSWORD=$1
 
 # Switch folder
 cd /home/ubuntu/
@@ -51,6 +49,8 @@ blocks:
 sed -i "s~  dataDisk: \"\"~  dataDisk: \"admin-disk2.vmdk\"~" admin-cluster.yaml
 sed -i "s~    type: dhcp~    type: static~" admin-cluster.yaml
 sed -i "s~    # ipBlockFilePath: \"\"~    ipBlockFilePath: \"/home/ubuntu/admin-hostconfig.yaml\"~" admin-cluster.yaml
+sed -i "s~  serviceCIDR: 10.96.232.0/24~  serviceCIDR: 10.196.116.0/24~" admin-cluster.yaml
+sed -i "s~  podCIDR: 192.168.0.0/16~  podCIDR: 10.116.0.0/16~" admin-cluster.yaml
 sed -i "s~    networkName: VM Network~    networkName: \"Admin Network\"~" admin-cluster.yaml
 sed -i "s~    controlPlaneVIP: \"\"~    controlPlaneVIP: \"172.16.116.4\"~" admin-cluster.yaml
 sed -i "s~    ipBlockFilePath: \"\"~    ipBlockFilePath: \"admin-seesaw-hostconfig.yaml\"~" admin-cluster.yaml
@@ -61,13 +61,16 @@ sed -i "s~  clusterLocation: \"\"~  clusterLocation: \"europe-north1\"~" admin-c
 sed -i "s~  serviceAccountKeyPath: \"\"~  serviceAccountKeyPath: \"/home/ubuntu/stackdriver-key.json\"~" admin-cluster.yaml
 
 # Run gkectl prepare to initialize your vSphere environment
-gkectl prepare --config admin-cluster.yaml --skip-validation-all
+echo "Preparing vSphere environment"
+## gkectl prepare --config admin-cluster.yaml --skip-validation-all
 
 # Create and configure the VM for your Seesaw load balancer
-gkectl create loadbalancer --config admin-cluster.yaml
+echo "Creating load balancer"
+##gkectl create loadbalancer --config admin-cluster.yaml
 
-# Create admin cluster
-gkectl create admin --config admin-cluster.yaml
+# Create admin-cluster
+echo "Creating admin-cluster"
+##gkectl create admin --config admin-cluster.yaml -v5 --skip-validation-all
 
 echo "Admin-cluster deployed."
 echo "Configuration complete."
