@@ -47,12 +47,3 @@ output "esxi_host" {
 output "google_project" {
   value = var.google_project
 }
-
-// Uncomment and create this "dummy" resource when outputs are modified
-/*
-resource "null_resource" "echo" {
-  provisioner "local-exec" {
-    command = "echo \"Terraform outputs updated\""
-  }
-}
-*/
