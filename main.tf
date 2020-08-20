@@ -1,3 +1,13 @@
+terraform {
+  backend "remote" {
+    organization = "DevoteamCloudServices"
+
+    workspaces {
+      name = "anthos-vmware-terraform-core"
+    }
+  }
+}
+
 provider "vsphere" {
   user           = var.vsphere_user
   password       = var.vsphere_password

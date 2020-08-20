@@ -1,3 +1,13 @@
+terraform {
+  backend "remote" {
+    organization = "DevoteamCloudServices"
+
+    workspaces {
+      name = "anthos-vmware-terraform-adminws"
+    }
+  }
+}
+
 provider "vsphere" {
   user           = var.vsphere_user
   password       = var.vsphere_password
@@ -6,7 +16,6 @@ provider "vsphere" {
   # If you have a self-signed cert
   allow_unverified_ssl = true
 }
-
 
 data "terraform_remote_state" "core" {
   backend = "local"
