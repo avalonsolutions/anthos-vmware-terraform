@@ -9,8 +9,6 @@ resource "vsphere_virtual_machine" "aws_vm" {
   num_cpus         = 4
   memory           = 8192
 
-  # annotation = "Cluster Installed"
-
   network_interface {
     network_id = data.terraform_remote_state.core.outputs.vm_network
   }

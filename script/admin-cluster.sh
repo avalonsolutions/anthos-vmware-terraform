@@ -1,33 +1,37 @@
 #! /bin/bash
 echo "Creating Admin-Cluster..."
 
+# Variables passed from terraform
+
+# Other Variables
+
 # Switch folder
 cd /home/ubuntu/
 
 # Create and modify required files for admin-cluster
 
 echo "hostconfig:
-  dns: 192.168.86.1
-  tod: 0.se.pool.ntp.org
+  dns: "192.168.86.1"
+  tod: "0.se.pool.ntp.org"
   otherdns:
-  - 8.8.8.8
-  - 8.8.4.4
+  - "8.8.8.8"
+  - "8.8.4.4"
   othertod:
-  - ntp.ubuntu.com
+  - "ntp.ubuntu.com"
 blocks:
-  - netmask: 255.255.255.0
-    gateway: 172.16.116.1
+  - netmask: "255.255.255.0"
+    gateway: "172.16.116.1"
     ips:
-    - ip: 172.16.116.10
-      hostname: admin-host1
-    - ip: 172.16.116.11
-      hostname: admin-host2
-    - ip: 172.16.116.12
-      hostname: admin-host3
-    - ip: 172.16.116.13
-      hostname: admin-host4
-    - ip: 172.16.116.14
-      hostname: admin-host5
+    - ip: "172.16.116.10"
+      hostname: "admin-host1"
+    - ip: "172.16.116.11"
+      hostname: "admin-host2"
+    - ip: "172.16.116.12"
+      hostname: "admin-host3"
+    - ip: "172.16.116.13"
+      hostname: "admin-host4"
+    - ip: "172.16.116.14"
+      hostname: "admin-host5"
 " > admin-hostconfig.yaml
 
 echo "hostconfig:

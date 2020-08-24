@@ -1,6 +1,10 @@
 #! /bin/bash
 echo "Creating User-Cluster..."
 
+# Variables passed from terraform
+
+# Other Variables
+
 # Switch folder
 cd /home/ubuntu/
 
@@ -10,20 +14,20 @@ echo "hostconfig:
   dns: "192.168.86.1"
   tod: "0.se.pool.ntp.org"
   otherdns:
-  - 8.8.8.8
-  - 8.8.4.4
+  - "8.8.8.8"
+  - "8.8.4.4"
   othertod:
-  - ntp.ubuntu.com
+  - "ntp.ubuntu.com"
 blocks:
-  - netmask: 255.255.252.0
-    gateway: 192.168.116.1
+  - netmask: "255.255.252.0"
+    gateway: "192.168.116.1"
     ips:
-    - ip: 192.168.116.15
-      hostname: user-host1
-    - ip: 192.168.116.16
-      hostname: user-host2
-    - ip: 192.168.116.17
-      hostname: user-host3
+    - ip: "192.168.116.15"
+      hostname: "user-host1"
+    - ip: "192.168.116.16"
+      hostname: "user-host2"
+    - ip: "192.168.116.17"
+      hostname: "user-host3"
 " > user-hostconfig.yaml
 
 echo "hostconfig:
