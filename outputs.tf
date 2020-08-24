@@ -8,24 +8,17 @@ output "nws_ip" {
   value       = "${vsphere_virtual_machine.nws_vm.guest_ip_addresses[0]}"
 }
 
-output "vsphere_user" {
-  value = var.vsphere_user
-}
-
 output "linux_user" {
   value = var.linux_user
 }
-
-output "vsphere_server" {
-  value = var.vsphere_server
-}
-
 output "script_path" {
-  value = var.script_path
+  value     = var.script_path
+  sensitive = true
 }
 
 output "sa_path" {
-  value = var.sa_path
+  value     = var.sa_path
+  sensitive = true
 }
 
 output "datastore2" {
@@ -41,7 +34,8 @@ output "vm_network" {
 }
 
 output "esxi_host" {
-  value = data.vsphere_host.esxi_host.id
+  value     = data.vsphere_host.esxi_host.id
+  sensitive = true
 }
 
 output "google_project" {

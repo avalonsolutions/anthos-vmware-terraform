@@ -1,5 +1,5 @@
 resource "vsphere_virtual_machine" "ivm_vm" {
-  name             = var.ivm_host_name
+  name             = var.bastion_host_name
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore1.id
   host_system_id   = data.vsphere_host.esxi_host.id

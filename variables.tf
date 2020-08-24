@@ -11,14 +11,14 @@ variable "vsphere_password" {
 }
 
 variable "vsphere_server" {
-  default = "photon-machine.lan"
+  description = "set to name or ip of the vpshere_server (export TF_VAR_vpshere_password=)"
 }
 
-variable "nws_host_name" {
+variable "networkservices_host_name" {
   default = "NetworkServices"
 }
 
-variable "ivm_host_name" {
+variable "bastion_host_name" {
   default = "InstallVM"
 }
 
