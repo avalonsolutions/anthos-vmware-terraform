@@ -8,10 +8,20 @@ provider "vsphere" {
 }
 
 terraform {
+  backend "remote" {
+    organization = "DevoteamCloudServices"
+
+    workspaces {
+      name = "anthos-vmware-terraform-core"
+    }
+  }
   required_providers {
     vsphere = {
       source = "hashicorp/vsphere"
     }
   }
   required_version = ">= 0.13"
+}
+terraform {
+
 }
