@@ -8,6 +8,13 @@ provider "vsphere" {
 }
 
 terraform {
+  backend "remote" {
+    organization = "DevoteamCloudServices"
+
+    workspaces {
+      name = "anthos-vmware-terraform-adminws"
+    }
+  }
   required_providers {
     null = {
       source = "hashicorp/null"
